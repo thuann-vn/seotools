@@ -151,10 +151,10 @@ class SEOMeta implements MetaTagsContract
 
         $html = [];
 
-        if ($title) {
+         if ($title) {
             $titleAttrs = '';
-            if(!empty($this->config->get('title_attributes'))){
-               $attributes = $this->config->get('title_attributes');
+            $attributes = $this->config->get('defaults.title_attributes');
+            if(!empty($attributes)){
                $titleAttrs = join(' ', array_map(function($key) use ($attributes) {
                   if(!empty($attributes[$key])){
                      return $key. '="' . $attributes[$key] . '"';
