@@ -152,7 +152,17 @@ class SEOMeta implements MetaTagsContract
         $html = [];
 
         if ($title) {
-            $html[] = Arr::get($this->config, 'add_notranslate_class', false) ? "<title class=\"notranslate\">$title</title>" : "<title>$title</title>";
+            $titleAttrs = '';
+            if(!empty($this->config->get('title_attributes')){
+               $attributes = $this->config->get('title_attributes');
+               $titleAttrs = join(' ', array_map(function($key) use ($attributes) {
+                  if(!empty($attributes[$key])){
+                     return $key. '="' . $attributes[$key] . '"';
+                  }
+                  return $key;
+               }, array_keys($attributes)));
+            }
+            $html[] = Arr::get($this->config, 'add_notranslate_class', false) ? "<title $titleAttrs class=\"notranslate\">$title</title>" : "<title $titleAttrs>$title</title>";
         }
 
         if ($description) {
